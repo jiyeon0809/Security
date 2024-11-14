@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" crossorigin="anonymous"></script>
+    <script th:src="@{/js/signUp.js}"></script>
+    <link th:href="@{/css/signUp.css}" rel="stylesheet">
+</head>
+<body>
+<section class="user">
+    <div class="user_options-container">
+        <div class="user_options-text">
+            <div class="user_options-unregistered">
+                <h2 class="user_unregistered-title">Don't have an account?</h2>
+                <p class="user_unregistered-text">회원가입을 해서 웹사이트의 맴버가 되세요!</p>
+                <button class="user_unregistered-signup" id="signup-button">Sign up</button>
+            </div>
+
+            <div class="user_options-registered">
+                <h2 class="user_registered-title">Have an account?</h2>
+                <p class="user_registered-text">로그인을 해서 다양한 콘텐츠를 즐기세요!</p>
+                <button class="user_registered-login" id="login-button">Login</button>
+            </div>
+        </div>
+
+        <div class="user_options-forms" id="user_options-forms">
+            <div class="user_forms-login">
+                <h2 class="forms_title">Login</h2>
+                <form class="forms_form">
+                    <fieldset class="forms_fieldset">
+                        <div class="forms_field">
+                            <input type="text" placeholder="User ID" id="LoginUserId" class="forms_field-input" required autofocus />
+                        </div>
+                        <div class="forms_field">
+                            <input type="password" placeholder="Password" id="LoginPassword" class="forms_field-input" required />
+                        </div>
+                    </fieldset>
+                    <div class="forms_buttons" id="login">
+                        <button type="button" class="forms_buttons-forgot">Forgot password?</button>
+                        <input type="submit" value="Log In" class="forms_buttons-action">
+                    </div>
+                </form>
+            </div>
+            <div class="user_forms-signup">
+                <h2 class="forms_title">Sign Up</h2>
+                <form class="forms_form">
+                    <fieldset class="forms_fieldset">
+                        <div class="forms_field">
+                            <input type="text" placeholder="Username" id="userName" class="forms_field-input" required />
+                        </div>
+                        <div class="forms_field">
+                            <input type="text" placeholder="User ID" id="userId" class="forms_field-input" required />
+                        </div>
+                        <div class="forms_field">
+                            <input type="password" placeholder="Password" id="password" class="forms_field-input" required />
+                        </div>
+                    </fieldset>
+                    <div class="forms_buttons" id="sign-up">
+                        <input type="submit" value="Sign Up" class="forms_buttons-action">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

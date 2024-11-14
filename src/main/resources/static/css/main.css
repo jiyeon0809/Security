@@ -1,0 +1,162 @@
+/* CSS에서는 변수를 사용할 수 없으므로 각 변수 값을 직접 사용합니다 */
+* {
+    box-sizing: border-box;
+}
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    min-height: 100vh;
+    background: #fbf6e6; /* $bg */
+}
+
+#container {
+    display: flex;
+    flex-direction: column; /* 버튼들이 세로로 배치되도록 설정 */
+    align-items: center;
+    justify-content: center;
+    width: 6.25rem; /* $main-width */
+    height: auto; /* 세로 높이는 자동으로 조정 */
+}
+
+button {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    vertical-align: middle;
+}
+
+button.face-button {
+    width: 6.25rem; /* $main-width */
+    height: 6.25rem; /* $main-height */
+    border-radius: 50%;
+    background: #fdda5f; /* $face */
+    box-shadow: inset 2px -4px 18px #fd9744; /* $face-shadow */
+}
+
+.face-container {
+    position: relative;
+    display: block;
+    width: 40px;
+    height: 20px;
+    margin: auto;
+}
+
+.eye {
+    position: absolute;
+    height: 0.5rem;
+    width: 0.5rem;
+    background: #2a2927; /* $black */
+    border-radius: 50%;
+    animation: eyeBlink 3200ms linear infinite;
+}
+
+.eye.left {
+    left: 0;
+}
+.eye.right {
+    left: 2rem;
+}
+
+.mouth {
+    position: absolute;
+    top: 1.125rem;
+    left: 0.8rem;
+    width: 1rem;
+    height: 0.125rem;
+    background: #2a2927; /* $black */
+    border-radius: 0;
+}
+
+.eye,
+.mouth {
+    box-shadow: inset 1px 2px 4px #121110;
+}
+
+.face-button:hover .mouth,
+.face-button:active .mouth {
+    left: 1rem;
+    width: 0.5rem;
+    height: 0.4rem;
+    border-radius: 1rem 1rem 0.125rem 0.125rem;
+}
+
+.face-button:hover .eye,
+.face-button:active .eye {
+    height: 0.375rem;
+    width: 0.375rem;
+    box-shadow: 0 0 0 0.25rem #fff; /* $white */
+}
+
+@keyframes eyeBlink {
+    0%,
+    30%,
+    36%,
+    100% {
+        transform: scale(1);
+    }
+    32%,
+    34% {
+        transform: scale(1, 0);
+    }
+}
+
+.logout-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #ff4500, #ff6347);
+}
+
+.logout-button:active {
+    transform: translateY(2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+.logout-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #ff4500, #ff6347);
+}
+
+.logout-button:active {
+    transform: translateY(2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.logout-button {
+    margin-top: 1rem; /* face-button 아래에 여백 추가 */
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(135deg, #ff6347, #ff4500); /* gradient color */
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.logout-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #ff4500, #ff6347);
+}
+
+.logout-button:active {
+    transform: translateY(2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
