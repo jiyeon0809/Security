@@ -1,6 +1,9 @@
 # Security
-##1.로그인 
+## 1.로그인 
 ---
+엑세스 토큰: 로그인 성공 시 엑세스 토큰을 로컬 스토리지에 저장한다
+리프레쉬 토큰: 리프레쉬 토큰은 쿠키에 저장한다.
+
 
 일단 MemberMapper에서 signIn 메서드를 만들고 memberService에서
 사용자에게 받아온 정보와 DB에서 받아온 정보를 비교한다
@@ -67,8 +70,92 @@ Authentication authentication = authenticationManager.authenticate(
 그리고 회원가입은 postmapping으로 진행하였는데 view controller에 hasRole을 추가 할 시, html 파일을 보여주기도 전에 서버에서 무슨 역할을 가지고 있는지 확인을 해서 html을 아예 안보이는 문제가 생길 수 있기 때문에 api controller에 이를 추가한다 
 
 
+## 2. JWT 토큰 기반의 인증
+---
 
-##2. ROLE_USER, ROLE_ADMIN
+1. 토큰 생성 및 검증
+   
+   TokenProvider 클래스에서 토큰 생성, 검증, 정보 추출을 담당
+   토큰 생성: 사용자 정보와 만료기간을 설정해 JWT 발급
+   토큰 검증: 유효한 토큰인지 검증하고 기간이 만료된 토큰이면 2, 유효하지 않은 경우 3을 반환한다.
+
+public int validateToken(String token) {
+        try {
+            Jwts.parserBuilder()
+                    .setSigningKey(getSecretKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+            log.info("Token validated");
+            return 1;
+        } catch (ExpiredJwtException e) {
+            // 토큰이 만료된 경우
+            log.info("Token is expired");
+            return 2;
+        } catch (Exception e) {
+            // 복호화 과정에서 에러 발생
+            log.info("Token is not valid");
+            return 3;
+        }
+    }
+
+
+2. controller
+   
+   WebSecurityConfig에 @EnableMethodSecurity(prePostEnabled = true)를 설정한 후 ApiController에서 @PreAuthorize 어노테이션을 사용하여 ROLE_ADMIN 또는 글 작성자 본인만 상세 페이지를 볼 수 있도록 설정
+
+
+
+@Slf4j
+@Configuration
+@RequiredArgsConstructor
+@EnableMethodSecurity(prePostEnabled = true)
+public class WebSecurityConfig {} 
+
+
+@PreAuthorize("hasRole('ROLE_USER')")
+  @GetMapping("/user")
+  public void userpage() {
+      System.out.println("user page");
+  }
+
+
+3. WebSecurityConfig
+
+AccessDeniedHandler(403)와 AuthenticationEntryPoint(401) JSON 메시지로 변환해서 받아와 권한별로 페이지 이동 처리
+
+      @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return (request, response, accessDeniedException) -> {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("{\"error\": \"Access Denied\", \"message\": \"You do not have permission to access this resource.\"}");
+        };
+    }
+
+    @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint() {
+        return (request, response, authException) -> {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("{\"error\": \"Unauthorized\", \"message\": \"Authentication is required to access this resource.\"}");
+        };
+    }
+
+
+## 3. 인증 흐름
+---
+
+엑세스 토큰이 있을 경우: 프론트엔드에서 엑세스토큰이 로컬 스토리지에 존재하면 서버에 요청을 보낸다.
+
+서버에서 토큰을 확인하고 유효성 검사를 해서 토큰이 만료되면 401에러를 보낸다
+
+만약, 엑세스 토큰이 만료되었는데 refressh토큰이 남아있으면 access 토큰을 재발급하고 없으면 로그인 페이지로 리다이렉트 시킨다.
+
+
+## 4. ROLE_USER, ROLE_ADMIN
 ----
 
 일반 사용자는 user로 가입되게 하고 관리자는 admin으로 가입되도록 DB에서 role을 바꿔 관리한다
