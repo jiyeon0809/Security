@@ -2,6 +2,7 @@
 ## 1.로그인 
 ---
 엑세스 토큰: 로그인 성공 시 엑세스 토큰을 로컬 스토리지에 저장한다
+
 리프레쉬 토큰: 리프레쉬 토큰은 쿠키에 저장한다.
 
 
@@ -38,6 +39,7 @@ Authentication authentication = authenticationManager.authenticate(
 그리고 SignInResponseDTO에 이 정보를 담는다.
 
 
+
  return SignInResponseDTO.builder()
                 .isLoggedIn(true)
           
@@ -61,11 +63,13 @@ Authentication authentication = authenticationManager.authenticate(
 
     
 
-그런데 Token은 Cookie 안에서 저장되어야 하니까 Cookie의 유효기간이 Token의 유효기간보다 짧으면 로그아웃할때 refreshtoken이 사라지지 않으니까 둘의 유효기간을 일치시키는 것이 이상적이다. 
+그런데 Token은 Cookie 안에서 저장되어야 하니까 Cookie의 유효기간이 Token의 유효기간보다 짧으면 로그아웃할때 
+
+refreshtoken이 사라지지 않으니까 둘의 유효기간을 일치시키는 것이 이상적이다. 
 
 
 
-그리고 로그인은 postmapping으로 진행하였는데 view controller에 hasRole을 추가 할 시, html 파일을 보여주기도 전에 서버에서 무슨 역할을 가지고 있는지 확인을 해서 html을 아예 안보이는 문제가 생길 수 있기 때문에 api controller에 이를 추가한다 
+그리고 로그인은 postmapping으로 진행하였는데 view controller에 hasRole을 추가 할 시, html 파일을 보여주기도 전에서버에서 무슨 역할을 가지고 있는지 확인을 해서 html을 아예 안보이는 문제가 생길 수 있기 때문에 api controller에 이를 추가한다 
 
 
 ![Screenshot 2024-11-15 170616](https://github.com/user-attachments/assets/5230c9a1-2a13-4a78-bc09-3294009f1263)
@@ -123,7 +127,9 @@ public int validateToken(String token) {
 
 2. controller
    
-   WebSecurityConfig에 @EnableMethodSecurity(prePostEnabled = true)를 설정한 후 ApiController에서 @PreAuthorize 어노테이션을 사용하여 ROLE_ADMIN 또는 글 작성자 본인만 상세 페이지를 볼 수 있도록 설정
+   WebSecurityConfig에 @EnableMethodSecurity(prePostEnabled = true)를 설정한 후
+
+    ApiController에서 @PreAuthorize 어노테이션을 사용하여 ROLE_ADMIN 또는 글 작성자 본인만 상세 페이지를 볼 수 있도록 설정
 
 
 
@@ -189,3 +195,25 @@ AccessDeniedHandler(403)와 AuthenticationEntryPoint(401) JSON 메시지로 변�
 
 
 이 때, ajax가 response값을 html 구조로 받아버려 error 코드를 인지하지 못하여 hasRole이 무용지물되어버리는 문제가 발생했는데, security파일에서 ajax로 보내는 데이터를 error코드가 전송되게끔 수정함으로써 js ajax에서 받은 에러코드값에 따른 처리 코드를 구현함으로써 문제를 해결했다
+
+ checkToken().then(() => {
+
+        $.ajax({
+            url:'/user',
+            type:'GET',
+            success: function (response) {
+                console.log('res :: ', response)
+            },
+            error: function (xhr) {
+                if(xhr.status === 401){
+                    handleTokenExpiration();
+                }else if (xhr.status === 403) {
+                    window.location.href='/access-denied';
+                }else{
+                    alert("Unexpected error")
+                }
+            }
+        });
+    });
+
+    
