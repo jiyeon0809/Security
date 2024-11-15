@@ -138,16 +138,24 @@ public int validateToken(String token) {
 
 
 @Slf4j
+
 @Configuration
+
 @RequiredArgsConstructor
+
 @EnableMethodSecurity(prePostEnabled = true)
+
 public class WebSecurityConfig {} 
 
 
 @PreAuthorize("hasRole('ROLE_USER')")
+
   @GetMapping("/user")
+  
   public void userpage() {
+  
       System.out.println("user page");
+      
   }
 
 
