@@ -148,14 +148,14 @@ public int validateToken(String token) {
 public class WebSecurityConfig {} 
 
 
+
+
 @PreAuthorize("hasRole('ROLE_USER')")
 
   @GetMapping("/user")
   
   public void userpage() {
-  
       System.out.println("user page");
-      
   }
 
 
