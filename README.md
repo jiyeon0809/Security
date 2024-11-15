@@ -21,7 +21,11 @@ Authentication authentication = authenticationManager.authenticate(
 그리고 꺼내온 사용자 정보를 member로 반환한다.
 
 
+
+
  Member member = ((CustomUserDetails) authentication.getPrincipal()).getMember();
+
+
 
  
 
