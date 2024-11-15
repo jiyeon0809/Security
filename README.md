@@ -83,7 +83,7 @@ refreshtoken이 사라지지 않으니까 둘의 유효기간을 일치시키는
 ## 2. JWT 토큰 기반의 인증
 ---
 
-1. 토큰 생성 및 검증
+### 1. 토큰 생성 및 검증
    
    TokenProvider 클래스에서 토큰 생성, 검증, 정보 추출을 담당
    토큰 생성: 사용자 정보와 만료기간을 설정해 JWT 발급
@@ -129,13 +129,13 @@ public int validateToken(String token) {
  }   
 
 
-2. controller
+### 2. controller
    
    WebSecurityConfig에 @EnableMethodSecurity(prePostEnabled = true)를 설정한 후
 
     ApiController에서 @PreAuthorize 어노테이션을 사용하여 ROLE_ADMIN 또는 글 작성자 본인만 상세 페이지를 볼 수 있도록 설정
 
-
+---
 
 @Slf4j
 
@@ -148,7 +148,7 @@ public int validateToken(String token) {
 public class WebSecurityConfig {} 
 
 
-
+----
 
 @PreAuthorize("hasRole('ROLE_USER')")
 
@@ -158,8 +158,10 @@ public class WebSecurityConfig {}
       System.out.println("user page");
   }
 
+---
 
-3. WebSecurityConfig
+
+### 3. WebSecurityConfig
 
 AccessDeniedHandler(403)와 AuthenticationEntryPoint(401) JSON 메시지로 변환해서 받아와 권한별로 페이지 이동 처리
 
