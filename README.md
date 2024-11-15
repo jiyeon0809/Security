@@ -40,7 +40,6 @@ Authentication authentication = authenticationManager.authenticate(
 
 
  return SignInResponseDTO.builder()
-
                 .isLoggedIn(true)
           
                 .message("로그인 성공")
