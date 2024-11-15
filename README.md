@@ -15,11 +15,15 @@ Authentication authentication = authenticationManager.authenticate(
         
 
 그리고 꺼내온 사용자 정보를 member로 반환한다.
+
+
  Member member = ((CustomUserDetails) authentication.getPrincipal()).getMember();
 
  
 
 또한, accessToken과 refreshToken을 회원가입 시 한번에 발급한다 
+
+
         // Access Token
         String accessToken = tokenProvider.generateToken(member, Duration.ofHours(2)); 
 
