@@ -86,8 +86,13 @@ refreshtoken이 사라지지 않으니까 둘의 유효기간을 일치시키는
 ### 1. 토큰 생성 및 검증
    
    TokenProvider 클래스에서 토큰 생성, 검증, 정보 추출을 담당
+
+   
    토큰 생성: 사용자 정보와 만료기간을 설정해 JWT 발급
+
+   
    토큰 검증: 유효한 토큰인지 검증하고 기간이 만료된 토큰이면 2, 유효하지 않은 경우 3을 반환한다.
+   
 
 public int validateToken(String token) {
 
