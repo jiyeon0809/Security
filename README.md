@@ -65,7 +65,11 @@ Authentication authentication = authenticationManager.authenticate(
 
 
 
-그리고 회원가입은 postmapping으로 진행하였는데 view controller에 hasRole을 추가 할 시, html 파일을 보여주기도 전에 서버에서 무슨 역할을 가지고 있는지 확인을 해서 html을 아예 안보이는 문제가 생길 수 있기 때문에 api controller에 이를 추가한다 
+그리고 로그인은 postmapping으로 진행하였는데 view controller에 hasRole을 추가 할 시, html 파일을 보여주기도 전에 서버에서 무슨 역할을 가지고 있는지 확인을 해서 html을 아예 안보이는 문제가 생길 수 있기 때문에 api controller에 이를 추가한다 
+
+
+![Screenshot 2024-11-15 170616](https://github.com/user-attachments/assets/5230c9a1-2a13-4a78-bc09-3294009f1263)
+
 
 
 ## 2. JWT 토큰 기반의 인증
@@ -178,6 +182,10 @@ AccessDeniedHandler(403)와 AuthenticationEntryPoint(401) JSON 메시지로 변�
 일반 사용자는 user로 가입되게 하고 관리자는 admin으로 가입되도록 DB에서 role을 바꿔 관리한다
 일반 사용자는 hasRole이 user인 페이지만 접근 가능하며 관리자 페이지는 못들어간다. 만약 일반 사용자가 관리자 페이지를 들어가려고 시도할 시 /access-denied 페이지가 나오도록 구현했다 
 
+![Screenshot 2024-11-15 170412](https://github.com/user-attachments/assets/1cd8dda8-21eb-418e-9278-edf682a5e26a)
+
+
+![Screenshot 2024-11-15 170759](https://github.com/user-attachments/assets/35dfecf0-8bb3-4fc0-9868-de5caee75313)
 
 
 이 때, ajax가 response값을 html 구조로 받아버려 error 코드를 인지하지 못하여 hasRole이 무용지물되어버리는 문제가 발생했는데, security파일에서 ajax로 보내는 데이터를 error코드가 전송되게끔 수정함으로써 js ajax에서 받은 에러코드값에 따른 처리 코드를 구현함으로써 문제를 해결했다
