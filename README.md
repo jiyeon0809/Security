@@ -38,7 +38,6 @@ Authentication authentication = authenticationManager.authenticate(
 그리고 SignInResponseDTO에 이 정보를 담는다.
 
 
-
  return SignInResponseDTO.builder()
                 .isLoggedIn(true)
           
@@ -79,24 +78,43 @@ Authentication authentication = authenticationManager.authenticate(
    토큰 검증: 유효한 토큰인지 검증하고 기간이 만료된 토큰이면 2, 유효하지 않은 경우 3을 반환한다.
 
 public int validateToken(String token) {
+
         try {
+        
             Jwts.parserBuilder()
+            
                     .setSigningKey(getSecretKey())
+                    
                     .build()
+                    
                     .parseClaimsJws(token)
+                    
                     .getBody();
+                    
             log.info("Token validated");
+            
             return 1;
+            
         } catch (ExpiredJwtException e) {
+        
             // 토큰이 만료된 경우
+          
             log.info("Token is expired");
+            
             return 2;
+            
         } catch (Exception e) {
+        
             // 복호화 과정에서 에러 발생
+            
             log.info("Token is not valid");
+            
             return 3;
+            
         }
+        
     }
+    
 
 
 2. controller
