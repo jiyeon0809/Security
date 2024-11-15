@@ -36,15 +36,35 @@ Authentication authentication = authenticationManager.authenticate(
 
 
  return SignInResponseDTO.builder()
+
+ 
                 .isLoggedIn(true)
+
+                
                 .message("로그인 성공")
+
+                
                 .url("/member/main")
+
+                
                 .accessToken(accessToken)
+
+                
                 .refreshToken(refreshToken)
+
+                
                 .userId(member.getUserId())
+
+                
                 .userName(member.getUserName())
+
+                
                 .build();
+
+                
     } 
+
+    
 
     
 
