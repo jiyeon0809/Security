@@ -57,7 +57,7 @@ Authentication authentication = authenticationManager.authenticate(
 
                 .build();
 
-    } 
+    
 
     
 
@@ -122,7 +122,7 @@ public int validateToken(String token) {
         }
         
     }
-    
+ }   
 
 
 2. controller
