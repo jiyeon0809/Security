@@ -35,33 +35,25 @@ Authentication authentication = authenticationManager.authenticate(
 그리고 SignInResponseDTO에 이 정보를 담는다.
 
 
+
  return SignInResponseDTO.builder()
 
- 
                 .isLoggedIn(true)
-
-                
+          
                 .message("로그인 성공")
 
-                
                 .url("/member/main")
 
-                
                 .accessToken(accessToken)
 
-                
                 .refreshToken(refreshToken)
 
-                
                 .userId(member.getUserId())
-
                 
                 .userName(member.getUserName())
 
-                
                 .build();
 
-                
     } 
 
     
