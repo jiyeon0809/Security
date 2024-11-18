@@ -1,6 +1,7 @@
 # Security
 
-![Screenshot 2024-11-18 215448](https://github.com/user-attachments/assets/15a4e33b-652d-423e-ab55-8a49f3b848e5)
+![Screenshot 2024-11-18 220152](https://github.com/user-attachments/assets/cababdea-cb45-4b71-b1f4-4a745d82025d)
+
 
 
 ## 1.로그인 
