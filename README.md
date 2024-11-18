@@ -1,7 +1,6 @@
 # Security
 
-![image](https://github.com/user-attachments/assets/fa1564e4-358a-4f5c-9814-41d6c69683c3)
-
+![Screenshot 2024-11-18 215448](https://github.com/user-attachments/assets/15a4e33b-652d-423e-ab55-8a49f3b848e5)
 
 
 ## 1.로그인 
