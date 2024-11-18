@@ -221,22 +221,39 @@ AccessDeniedHandler(403)와 AuthenticationEntryPoint(401) JSON 메시지로 변�
 이 때, ajax가 response값을 html 구조로 받아버려 error 코드를 인지하지 못하여 hasRole이 무용지물되어버리는 문제가 발생했는데, security파일에서 ajax로 보내는 데이터를 error코드가 전송되게끔 수정함으로써 js ajax에서 받은 에러코드값에 따른 처리 코드를 구현함으로써 문제를 해결했다
 
  checkToken().then(() => {
+ 
         $.ajax({
+        
             url:'/user',
+            
             type:'GET',
+            
             success: function (response) {
+            
                 console.log('res :: ', response)
+                
             },
+            
             error: function (xhr) {
+            
                 if(xhr.status === 401){
+                
                     handleTokenExpiration();
+                    
                 }else if (xhr.status === 403) {
+                
                     window.location.href='/access-denied';
+                    
                 }else{
+                
                     alert("Unexpected error")
+                    
                 }
+                
             }
+            
         });
+        
     });
 
     
